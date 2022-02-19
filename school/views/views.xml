@@ -6,9 +6,10 @@
       <field name="name">school.student list</field>
       <field name="model">school.student</field>
       <field name="arch" type="xml">
-        <tree>
+        <tree decoration-info="birth_year>2000" decoration-warning="birth_year&lt;1980">
           <field name="name"/>
-          <field name="birth_year"/>
+          <field name="password"/>
+          <field name="birth_year" sum="Total"/>
         </tree>
       </field>
     </record>

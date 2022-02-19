@@ -6,25 +6,27 @@
             <field name="value">0</field>
           </record>
 
-          <record id="object1" model="school.school">
-            <field name="name">Object 1</field>
-            <field name="value">10</field>
-          </record>
 
-          <record id="object2" model="school.school">
-            <field name="name">Object 2</field>
-            <field name="value">20</field>
-          </record>
+      <record id="student1" model="school.student">
+          <field name="name">Juan</field>
+          <field name="dni">12345678N</field>
+          <field name='classroom' ref='school.classroom1'></field>
+      </record>
 
-          <record id="object3" model="school.school">
-            <field name="name">Object 3</field>
-            <field name="value">30</field>
-          </record>
-
-          <record id="object4" model="school.school">
-            <field name="name">Object 4</field>
-            <field name="value">40</field>
-          </record>
 -->
+
+      <record id="teacher1" model="school.teacher">
+        <field name="name">José Alberto</field>
+      </record>
+
+      <record id="teacher2" model="school.teacher">
+        <field name="name">José Luis</field>
+      </record>
+
+      <record id="classroom1" model="school.classroom">
+        <field name="name">DAM2</field>
+        <field name="teachers" eval="[(6,0,[ref('school.teacher1'),ref('school.teacher2')])]"></field>
+      </record>
+
     </data>
 </odoo>
