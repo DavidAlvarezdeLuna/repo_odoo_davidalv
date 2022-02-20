@@ -26,5 +26,24 @@
             <field name="value">40</field>
           </record>
 -->
+
+      <record id="technology1" model="devmeet.technology">
+        <field name="name">Java</field>
+        <field name="official_page">https://www.java.com/es</field>
+      </record>
+
+      <record id="classroom1" model="devmeet.classroom">
+        <field name="name">Class209</field>
+        <field name="num_computers">15</field>
+      </record>
+
+      <record id="event1" model="devmeet.event">
+        <field name="name">TechnoMeeting</field>
+        <field name="start_date">2023-06-22t00:00:00</field>
+        <field name="end_date">2023-06-24t00:00:00</field>
+        <field name="technologies" eval="[(6,0,[ref('devmeet.technology1')])]"></field>
+        <field name="classroom" ref="classroom1"></field>
+      </record>
+
     </data>
 </odoo>

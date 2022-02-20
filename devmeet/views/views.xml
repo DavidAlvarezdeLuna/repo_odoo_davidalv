@@ -10,6 +10,7 @@
           <field name="name"/>
           <field name="surname"/>
           <field name="dni"/>
+          <field name="last_login"/>
         </tree>
       </field>
     </record>
@@ -38,6 +39,17 @@
       </field>
     </record>
 
+    <record model="ir.ui.view" id="devmeet.classroom_list">
+      <field name="name">devmeet.classroom list</field>
+      <field name="model">devmeet.classroom</field>
+      <field name="arch" type="xml">
+        <tree decoration-warning="num_computers&lt;10">
+          <field name="name"/>
+          <field name="num_computers"/>
+        </tree>
+      </field>
+    </record>
+
 
     <!-- actions opening views on models -->
 
@@ -56,6 +68,12 @@
     <record model="ir.actions.act_window" id="devmeet.action_event_window">
       <field name="name">devmeet event window</field>
       <field name="res_model">devmeet.event</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="devmeet.action_classroom_window">
+      <field name="name">devmeet classroom window</field>
+      <field name="res_model">devmeet.classroom</field>
       <field name="view_mode">tree,form</field>
     </record>
 
@@ -94,6 +112,9 @@
 
     <menuitem name="Events" id="devmeet.menu_event_list" parent="devmeet.menu_1"
               action="devmeet.action_event_window"/>
+
+    <menuitem name="Classrooms" id="devmeet.menu_classroom_list" parent="devmeet.menu_1"
+              action="devmeet.action_classroom_window"/>
 
   </data>
 </odoo>
