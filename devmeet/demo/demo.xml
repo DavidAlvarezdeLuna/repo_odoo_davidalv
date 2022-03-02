@@ -29,7 +29,12 @@
 
       <record id="technology1" model="devmeet.technology">
         <field name="name">Java</field>
-        <field name="official_page">https://www.java.com/es</field>
+        <field name="official_page">https://www.java.com</field>
+      </record>
+
+      <record id="technology2" model="devmeet.technology">
+        <field name="name">Kotlin</field>
+        <field name="official_page">https://kotlinlang.org</field>
       </record>
 
       <record id="classroom1" model="devmeet.classroom">
@@ -37,12 +42,26 @@
         <field name="num_computers">15</field>
       </record>
 
+      <record id="classroom2" model="devmeet.classroom">
+        <field name="name">Class210</field>
+        <field name="num_computers">9</field>
+      </record>
+
       <record id="event1" model="devmeet.event">
         <field name="name">TechnoMeeting</field>
         <field name="start_date">2023-06-22t00:00:00</field>
         <field name="end_date">2023-06-24t00:00:00</field>
+        <field name="is_online">true</field>
         <field name="technologies" eval="[(6,0,[ref('devmeet.technology1')])]"></field>
-        <field name="classroom" ref="classroom1"></field>
+      </record>
+
+      <record id="event2" model="devmeet.event">
+        <field name="name">ReunionDevs</field>
+        <field name="start_date">2021-12-22t00:00:00</field>
+        <field name="end_date">2021-12-24t00:00:00</field>
+        <field name="is_online">false</field>
+        <field name="technologies" eval="[(6,0,[ref('devmeet.technology2')])]"></field>
+        <field name="classroom" ref="classroom2"></field>
       </record>
 
     </data>

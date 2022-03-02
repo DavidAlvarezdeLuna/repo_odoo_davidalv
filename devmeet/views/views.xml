@@ -10,7 +10,7 @@
           <field name="name"/>
           <field name="surname"/>
           <field name="dni"/>
-          <field name="last_login"/>
+          <field name="login"/>
         </tree>
       </field>
     </record>
@@ -34,7 +34,7 @@
           <field name="name"/>
           <field name="start_date"/>
           <field name="end_date"/>
-          <field name="attend"/>
+          <field name="is_online"/>
         </tree>
       </field>
     </record>
@@ -50,13 +50,320 @@
       </field>
     </record>
 
+    <record model="ir.ui.view" id="devmeet.developer_form">
+      <field name="name">devmeet.developer form</field>
+      <field name="model">devmeet.developer</field>
+      <field name="arch" type="xml">
+        <form string="">
+          <sheet>  
+            <group>
+              <group>
+                <separator string="Personal Data"></separator>
+                <field name="name"/>
+                <field name="surname"/>
+                <field name="dni"/>
+                <field name="password" password="True"/>
+                <field name="login"/>
+              </group>
+              <group>
+                <field name="photo" widget="image"/>
+              </group>
+            </group>
+          <notebook>
+            <page string="Technologies known">
+              <field name="technologies_known">
+                <tree>
+                  <field name="name"/>
+                  <field name="official_page"/>
+                </tree>
+              </field>
+            </page>
+            <page string="Technologies of Interst">
+              <field name="technologies_interest">
+                <tree>
+                  <field name="name"/>
+                  <field name="official_page"/>
+                </tree>
+              </field>
+            </page>
+            <page string="Events Attended">
+              <field name="events_assistant">
+                <tree>
+                  <field name="name"/>
+                  <field name="start_date"/>
+                  <field name="end_date"/>
+                </tree>
+              </field>
+            </page>
+            <page string="Events Speaker">
+              <field name="events_speaker">
+                <tree>
+                  <field name="name"/>
+                  <field name="start_date"/>
+                  <field name="end_date"/>
+                </tree>
+              </field>
+            </page>
+          </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="devmeet.technology_form">
+      <field name="name">devmeet.technology form</field>
+      <field name="model">devmeet.technology</field>
+      <field name="arch" type="xml">
+        <form string="">
+          <sheet>  
+            <group>
+              <group>
+                <separator string="General Data"></separator>
+                <field name="name"/>
+                <field name="official_page"/>
+                <field name="logo" widget="image" class="oe_avatar"/>
+              </group>
+            </group>
+          <notebook>
+            <page string="Known by">
+              <field name="developers_know">
+                <tree>
+                  <field name="name"/>
+                  <field name="surname"/>
+                  <field name="dni"/>
+                </tree>
+              </field>
+            </page>
+            <page string="Developers interested">
+              <field name="developers_interested">
+                <tree>
+                  <field name="name"/>
+                  <field name="surname"/>
+                  <field name="dni"/>
+                </tree>
+              </field>
+            </page>
+            <page string="Events where is Featured">
+              <field name="events">
+                <tree>
+                  <field name="name"/>
+                  <field name="start_date"/>
+                  <field name="end_date"/>
+                </tree>
+              </field>
+            </page>
+          </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="devmeet.event_form">
+      <field name="name">devmeet.event form</field>
+      <field name="model">devmeet.event</field>
+      <field name="arch" type="xml">
+        <form string="">
+          <sheet>  
+            <group>
+              <group>
+                <separator string="General Data"></separator>
+                <field name="name"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+              </group>
+              <group>
+                <separator string="Assistance Data"></separator>
+                <field name="is_online"/>
+                <field name="classroom"
+                  attrs ="{'invisible':[('is_online','=',True)],
+                  'required':[('is_online','=',False)]}"/>
+              </group>
+            </group>
+          <notebook>
+            <page string="Assistants">
+              <field name="assistants">
+                <tree>
+                  <field name="name"/>
+                  <field name="surname"/>
+                  <field name="dni"/>
+                </tree>
+              </field>
+            </page>
+            <page string="Speakers">
+              <field name="speakers">
+                <tree>
+                  <field name="name"/>
+                  <field name="surname"/>
+                  <field name="dni"/>
+                </tree>
+              </field>
+            </page>
+            <page string="Technologies">
+              <field name="technologies">
+                <tree>
+                  <field name="name"/>
+                  <field name="official_page"/>
+                </tree>
+              </field>
+            </page>
+          </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="devmeet.classroom_form">
+      <field name="name">devmeet.classroom form</field>
+      <field name="model">devmeet.classroom</field>
+      <field name="arch" type="xml">
+        <form string="">
+          <sheet>  
+            <group>
+              <group>
+                <separator string="General Data"></separator>
+                <field name="name"/>
+                <field name="num_computers"/>
+              </group>
+            </group>
+          <notebook>
+            <page string="Events">
+              <field name="events">
+                <tree>
+                  <field name="name"/>
+                  <field name="start_date"/>
+                  <field name="end_date"/>
+                </tree>
+              </field>
+            </page>
+          </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <record id="devmeet.developer_kanban" model="ir.ui.view">
+      <field name="name">devmeet.developer kanban</field>
+      <field name="model">devmeet.developer</field>
+      <field name="arch" type="xml">
+        <kanban>
+          <field name="id"></field>
+          <templates>
+            <t t-name="kanban-box">
+              <div t-attf-class="oe_kanban_global_click o_kanban_record_has_image_fill">
+                <a type="open">
+                  <img width="150" style="padding:5px" class="oe_kanban_image" t-att-src="kanban_image('devmeet.developer', 'photo', record.id.raw_value)" alt="developer image"/>
+                </a>
+                <div t-attr-class="oe_kanban_content">
+                  <h4>
+                    <a type="edit">
+                      <field name="name"></field>
+                      <field name="surname"></field>
+                    </a>
+                  </h4>
+                  <a type="edit">
+                    <field name="dni"></field>
+                  </a>
+                  <ul>
+                    <li>Technlogies Known:
+                      <field name="technologies_known"></field>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+
+    <record id="devmeet.event_kanban" model="ir.ui.view">
+      <field name="name">devmeet.event kanban</field>
+      <field name="model">devmeet.event</field>
+      <field name="arch" type="xml">
+        <kanban default_group_by="is_online" on_create="quick_create" quick_create_view="devmeet.quick_create_event_form">
+          <field name="id"></field>
+          <templates>
+            <t t-name="kanban-box">
+              <div t-attf-class="oe_kanban_global_click o_kanban_record_has_image_fill">
+                <div t-attr-class="oe_kanban_content">
+                  <h4>
+                    <a type="edit">
+                      <field name="name"></field>
+                    </a>
+                  </h4>
+                  <a type="edit">Duration:
+                    <field name="start_date"></field>
+                    -
+                    <field name="end_date"></field>
+                  </a>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="devmeet.quick_create_event_form">
+      <field name="name">devmeet.event form quickcreate</field>
+      <field name="model">devmeet.event</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+            <field name="name"/>
+            <field name="start_date"/>
+            <field name="end_date"/>
+          </group>
+        </form>
+      </field>
+    </record>
+
+    <record id="devmeet.developer_search" model="ir.ui.view">
+      <field name="name">devmeet.developer search</field>
+      <field name="model">devmeet.developer</field>
+      <field name="arch" type="xml">
+        <search>
+          <field name="name"/>
+          <field name="surname"/>
+          <field name="dni"/>
+        </search>
+      </field>
+    </record>
+
+    <record id="devmeet.event_search" model="ir.ui.view">
+      <field name="name">devmeet.event search</field>
+      <field name="model">devmeet.event</field>
+      <field name="arch" type="xml">
+        <search>
+          <field name="name"/>
+          <filter name="Not Started" string="From 2022" domain="[('start_date','&gt;=','01/01/2022')]"></filter>
+          <filter name="group_by_classroom" string="Group by classroom" context="{'group_by':'classroom'}"></filter>
+        </search>
+      </field>
+    </record>
+
+    <record id="devmeet.event_calendar" model="ir.ui.view">
+      <field name="name">devmeet.event calendar</field>
+      <field name="model">devmeet.event</field>
+      <field name="arch" type="xml">
+        <calendar string="Event calendar" date_start="start_date" date_stop="end_date" color="classroom">
+          <field name="name"/>
+        </calendar>
+      </field>
+    </record>
+
 
     <!-- actions opening views on models -->
 
     <record model="ir.actions.act_window" id="devmeet.action_developer_window">
       <field name="name">devmeet developer window</field>
       <field name="res_model">devmeet.developer</field>
-      <field name="view_mode">tree,form</field>
+      <field name="view_mode">tree,form,kanban</field>
     </record>
 
     <record model="ir.actions.act_window" id="devmeet.action_technology_window">
@@ -68,7 +375,7 @@
     <record model="ir.actions.act_window" id="devmeet.action_event_window">
       <field name="name">devmeet event window</field>
       <field name="res_model">devmeet.event</field>
-      <field name="view_mode">tree,form</field>
+      <field name="view_mode">tree,form,kanban,calendar</field>
     </record>
 
     <record model="ir.actions.act_window" id="devmeet.action_classroom_window">

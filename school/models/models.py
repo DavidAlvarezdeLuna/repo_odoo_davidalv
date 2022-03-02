@@ -43,12 +43,17 @@ class student(models.Model):
      Inscription_date = fields.Date(default= lambda d: fields.Date.today())
      last_login = fields.Datetime(default= lambda d: fields.Datetime.now())
      is_student = fields.Boolean()
+     
+     level = fields.Selection([('1','1'),('2','2')])
+     
      photo = fields.Image(max_width=200,max_height=200)
 
-     classroom = fields.Many2one('school.classroom', ondelete='set null', help='Clase a la que pertenece') #muchos estudiantes en una clase
+     classroom = fields.Many2one('school.classroom', domain="[('level','=',level)]", ondelete='set null', help='Clase a la que pertenece') #muchos estudiantes en una clase
 
      #mostrar que profesores le dan clase sin generar una tabla
      teachers = fields.Many2many('school.teacher', related='classroom.teachers', readonly=True)
+
+     state = fields.Selection([('1','Matriculado'),('2','Estudiante'),('3','ex-estudiante')], default='1')
 
      #el guion es porque es privado
      #le llega una lista, aunque sea de solo un elemento
@@ -68,11 +73,22 @@ class student(models.Model):
 
      _sql_constraints = [('dni_uniq', 'unique(dni)', 'DNI can\'t be repeated')]
 
+     #funcion del boton de regenerate password
+     def regenerate_password(self):
+          for student in self:
+               pw = secrets.token_urlsafe(12)
+               #almacenar en bbdd
+               student.write(['password', pw])
+
 class classroom(models.Model):
      _name = 'school.classroom'
      _description = 'Las clases'
 
      name = fields.Char()
+
+
+     level = fields.Selection([('1','1'),('2','2')])
+
      #students = fields.One2many('school.student', 'classroom') #en una clase, muchos estudiantes
      students = fields.One2many(string='Alumnos', comodel_name='school.student', inverse_name='classroom')
      #teachers = fields.Many2many('school.teacher')
@@ -100,6 +116,10 @@ class teacher(models.Model):
      _description = 'Los profesores'
 
      name = fields.Char()
+
+     topic = fields.Char()
+     phone = fields.Char()
+
      #classrooms = fields.Many2many('school.classroom')
      classrooms = fields.Many2many(comodel_name='school.classroom', relation='teachers_classroom', column1='teacher_id', column2='classroom_id')
      classrooms_last_year = fields.Many2many(comodel_name='school.classroom', relation='teachers_classroom_ly', column1='teacher_id', column2='classroom_id')
@@ -112,3 +132,11 @@ class teacher(models.Model):
 #     def _value_pc(self):
 #         for record in self:
 #             record.value2 = float(record.value) / 100
+
+class seminar(models.Model):
+     _name = 'school.seminar'
+     name = fields.Char()
+     date = fields.Datetime()
+     finish = fields.Datetime()
+     hours = fields.Integer()
+     classroom = fields.Many2one('school.classroom')

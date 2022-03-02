@@ -29,11 +29,11 @@ class developer(models.Model):
 
     name = fields.Char()
     surname = fields.Char()
-    dni = fields.Char(string="dni")
+    dni = fields.Char(string="dni", required="True")
     email = fields.Char(string="email")
     password = fields.Char(default=lambda p: secrets.token_urlsafe(12))
     photo = fields.Image(max_width=200,max_height=200)
-    last_login = fields.Datetime(default= lambda d: fields.Datetime.now())
+    login = fields.Datetime(default= lambda d: fields.Datetime.now())
     technologies_known = fields.Many2many(comodel_name='devmeet.technology', relation='developers_technology', column1='developer_id', column2='technology_id')
     technologies_interest = fields.Many2many(comodel_name='devmeet.technology', relation='developers_technology_interested', column1='developer_id', column2='technology_id')
     events_assistant = fields.Many2many(comodel_name='devmeet.event', relation='developers_event', column1='developer_id', column2='event_id')
@@ -70,7 +70,7 @@ class technonlogy(models.Model):
 
     name = fields.Char(string="name")
     official_page = fields.Char(default="https://www.google.com")
-    logo = fields.Image(max_width=200,max_height=200)
+    logo = fields.Image(max_width=50,max_height=50)
 
     developers_know = fields.Many2many(comodel_name='devmeet.developer', relation='developers_technology', column1='technology_id', column2='developer_id')
     developers_interested = fields.Many2many(comodel_name='devmeet.developer', relation='developers_technology_interested', column1='technology_id', column2='developer_id')
@@ -86,7 +86,7 @@ class events(models.Model):
     name = fields.Char()
     start_date = fields.Date(string="start_date")
     end_date = fields.Date(string="end_date")
-    attend = fields.Char() #check if the event is online
+    is_online = fields.Boolean() #check if the event is online
 
     assistants = fields.Many2many(comodel_name='devmeet.developer', relation='developers_event', column1='event_id', column2='developer_id')
 
